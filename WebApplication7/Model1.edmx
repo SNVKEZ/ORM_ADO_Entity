@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="PeoplesSet" EntityType="Model1.Store.PeoplesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarsSet" EntityType="Model1.Store.CarsSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PeoplesCars" Association="Model1.Store.PeoplesCars">
+      <End Role="Peoples" EntitySet="PeoplesSet" />
+      <End Role="Cars" EntitySet="CarsSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="PeoplesSet">
+    <Key>
+      <PropertyRef Name="IdPerson" />
+    </Key>
+    <Property Name="IdPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Job" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarsSet">
+    <Key>
+      <PropertyRef Name="IdCar" />
+    </Key>
+    <Property Name="IdCar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Model" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Year" Type="int" Nullable="false" />
+    <Property Name="Country" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PeoplesIdPerson" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="PeoplesCars">
+    <End Role="Peoples" Type="Model1.Store.PeoplesSet" Multiplicity="1" />
+    <End Role="Cars" Type="Model1.Store.CarsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Peoples">
+        <PropertyRef Name="IdPerson" />
+      </Principal>
+      <Dependent Role="Cars">
+        <PropertyRef Name="PeoplesIdPerson" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PeoplesSet" EntityType="Model1.Peoples" />
+          <EntitySet Name="CarsSet" EntityType="Model1.Cars" />
+          <AssociationSet Name="PeoplesCars" Association="Model1.PeoplesCars">
+            <End Role="Peoples" EntitySet="PeoplesSet" />
+            <End Role="Cars" EntitySet="CarsSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Peoples">
+          <Key>
+            <PropertyRef Name="IdPerson" />
+          </Key>
+          <Property Name="IdPerson" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Job" Type="String" Nullable="false" />
+          <NavigationProperty Name="Cars" Relationship="Model1.PeoplesCars" FromRole="Peoples" ToRole="Cars" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="IdCar" />
+          </Key>
+          <Property Name="IdCar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Model" Type="String" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Country" Type="String" Nullable="false" />
+          <NavigationProperty Name="Peoples" Relationship="Model1.PeoplesCars" FromRole="Cars" ToRole="Peoples" />
+          <Property Name="PeoplesIdPerson" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="PeoplesCars">
+          <End Type="Model1.Peoples" Role="Peoples" Multiplicity="1" />
+          <End Type="Model1.Cars" Role="Cars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Peoples">
+              <PropertyRef Name="IdPerson" />
+            </Principal>
+            <Dependent Role="Cars">
+              <PropertyRef Name="PeoplesIdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="PeoplesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Peoples)">
+        <MappingFragment StoreEntitySet="PeoplesSet">
+          <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+          <ScalarProperty Name="Job" ColumnName="Job" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Cars)">
+        <MappingFragment StoreEntitySet="CarsSet">
+          <ScalarProperty Name="IdCar" ColumnName="IdCar" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PeoplesIdPerson" ColumnName="PeoplesIdPerson" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
