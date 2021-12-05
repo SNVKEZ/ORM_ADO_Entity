@@ -16,7 +16,7 @@ namespace WebApplication7
             ListView1.InsertItemPosition=InsertItemPosition.LastItem;
         }
 
-        // Отобразить всех покупателей
+        // Отобразить всех владельцев
         public IQueryable<Peoples> GetPeoples()
         {
             // Используем LINQ-запрос для извлечения данных
@@ -24,7 +24,7 @@ namespace WebApplication7
         }
        
        
-        // Редактировать данные покупателя
+        // Редактировать данные владельцев
         public void EditPeople(int? personID)
         {
             Peoples person = dbContext.PeoplesSet
@@ -38,7 +38,7 @@ namespace WebApplication7
             }
         }
 
-        // Удалить покупателя
+        // Удалить владельца
         public void DeletePeople()
         {
             Peoples person = new Peoples();
@@ -50,7 +50,7 @@ namespace WebApplication7
             }
         }
 
-        // Вставить нового покупателя
+        // Вставить нового владельца
         public void InsertPeople()
         {
             Peoples person = new Peoples();
